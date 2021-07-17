@@ -10,20 +10,14 @@ const ScheduleList: React.FC<ScheduleListProps> = ({ schedulers, needFilter, ite
   useEffect(() => {
     if (needFilter) {
       const filterSchedules: SchedulerType[] = []
-      let isNowOrLater = false;
+      let shouldAddToSchedule = false;
 
       schedulers.forEach(schedule => {
-        if (!isNowOrLater) {
-          const onNow = schedule.datetime && schedule.duration 
-            ? isNow(schedule.datetime, schedule.duration)
-            : false;
-        
-          if (onNow) {
-            isNowOrLater = true
-          }
-        }
+        shouldAddToSchedule = isToday(schedule.datetime!) && !shouldAddToSchedule
+          ? isNow(schedule.datetime!, schedule.duration!)
+          : true
 
-        if (isNowOrLater) {
+        if (shouldAddToSchedule) {
           filterSchedules.push(schedule)
         }
       })
