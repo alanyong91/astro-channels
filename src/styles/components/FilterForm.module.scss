@@ -1,0 +1,107 @@
+.filterWrapper {
+  margin: 30px 0;
+
+  .filterInputsWrapper {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+
+    .inputWrapper {
+      width: 40%;
+      display: flex;
+      margin-right: 10px;
+      padding-right: 10px;
+      border-right: 1px solid #ccc;
+    }
+
+    input[type="text"],
+    select {
+      width: 100%;
+      height: 40px;
+      padding: 0 10px;
+      margin-right: 10px;
+    }
+    
+    select {
+      width: 20%;
+    }
+  }
+
+  .sortByWrapper {
+    display: flex;
+    overflow: auto;
+
+    .sortByButtons {
+      padding-right: 10px;
+      margin-right: 15px;
+      border-right: 1px solid #ccc;
+      display: flex;
+      flex-wrap: nowrap;
+    }
+
+    button {
+      border: 1px solid #ddd;
+      padding: 8px 20px;
+      border-radius: 16px;
+      white-space: nowrap;
+
+      &.sortByButton {
+        font-weight: bold;
+        margin-right: 5px;
+
+        &:last-child {
+          margin-right: 0;
+        }
+    
+        &.sortByActive {
+          color: #fff;
+          border-color: #e6007d;
+          background-color: #e6007d;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 959px) {
+  .filterWrapper {
+    .filterInputsWrapper {
+      display: block;
+
+      .inputWrapper {
+        width: 100%;
+        border-right: 0;
+        padding-right: 0;
+        margin-right: 0;
+        margin-bottom: 10px;
+      }
+
+      select {
+        width: 35%;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 599px) {
+  .filterWrapper {
+    .filterInputsWrapper {
+      select {
+        width: 100%;
+        margin-bottom: 10px;
+      }
+    }
+
+    .sortByWrapper {
+      overflow: hidden;
+      display: block;
+
+      .sortByButtons {
+        margin-right: 0;
+        margin-bottom: 10px;
+        border-right: 0;
+        overflow: auto;
+      }
+    }
+  }
+}

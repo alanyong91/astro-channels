@@ -1,0 +1,23 @@
+.scheduleList {
+  .scheduleItem {
+    display: flex;
+    margin: 0.25rem 0;
+    font-size: 0.9rem;
+    color: #888;
+
+    &.scheduleTimeOnNow {
+      color: #333;
+    }
+
+    .scheduleTime {
+      min-width: 4.5rem;
+      margin-right: 1rem;
+    }
+
+    .scheduleTitle {
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+  }
+}

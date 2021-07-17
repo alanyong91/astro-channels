@@ -1,0 +1,76 @@
+.channelDetailWrapper {
+  padding-top: 20px;
+  padding-bottom: 50px;
+
+  .breadcrumbs {
+    display: flex;
+    margin-bottom: 30px;
+
+    & div {
+      display: flex;
+      color: #888;
+
+      a {
+        color: #000;
+        text-decoration: none;
+      }
+
+      & > div {
+        margin: 0 10px;
+      }
+    }
+  }
+
+  .channelDescription {
+    margin: 1rem 0 2rem;
+  }
+
+  .scheduleDatimeList {
+    display: flex;
+    margin-bottom: 1.5rem;
+    overflow: auto;
+
+    button {
+      padding: 5px 0;
+      margin: 0 20px;
+      border: 0;
+      background-color: transparent;
+      text-transform: uppercase;
+      font-size: 14px;
+      cursor: pointer;
+
+      &:first-child {
+        margin-left: 0 !important;
+      }
+
+      &:last-child {
+        margin-right: 0 !important;
+      }
+
+      &.scheduleDateTimeActive {
+        font-weight: bold;
+        border-bottom: 2px solid #e6007d;
+      }
+    }
+  }
+}
+
+.scheduleItem {
+  padding: 0.5rem 0; 
+}
+
+.notFound {
+  padding: 30px 0;
+  text-align: center;
+}
+
+@media screen and (max-width: 959px) {
+  .channelDetailWrapper {
+    .scheduleDatimeList {
+      button {
+        margin-left: 10px;
+        margin-right: 10px;
+      }
+    }
+  }
+}
