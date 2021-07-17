@@ -3,7 +3,9 @@
 - CRA with typescript
 - SASS for CSS preprocessor
 
-[Demo Link](https://60f2bcb4f706dbe3871b6a71--adoring-brown-27be6b.netlify.app/)
+[Demo Link](https://adoring-brown-27be6b.netlify.app/)
+
+*p/s: the demo link **does not** have .htaccess, hence detail page will return **Page Not Found**.*
 
 ## Installation/Setup
 
