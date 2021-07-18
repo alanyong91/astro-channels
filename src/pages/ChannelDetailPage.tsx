@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import moment from 'moment';
 import api from './../utils/api';
-import { isToday } from './../utils/datetime'
+import { isToday, isNow } from './../utils/datetime'
 
 import PageBase from './../components/PageBase'
 import ChannelHeader from './../components/ChannelHeader'
@@ -16,6 +16,7 @@ const ChannelDetailpage: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true)
   const [channel, setChannel] = useState<ChannelDetailType | null>(null)
   const [selectedScheduleDate, setSelectedScheduleDate] = useState<string>('')
+  const [filteredSchedules, setFilteredSchedulers] = useState<SchedulerType[]>([])
   
   useEffect(() => {
     const fetch = async () => {
@@ -35,6 +36,25 @@ const ChannelDetailpage: React.FC = () => {
 
     fetch()
   }, [id])
+
+  useEffect(() => {
+    if (channel) {
+      const filterSchedules: SchedulerType[] = []
+      let shouldAddToSchedule = false;
+
+      (channel.schedule[selectedScheduleDate] || []).forEach(schedule => {
+        shouldAddToSchedule = isToday(schedule.datetime!) && !shouldAddToSchedule
+          ? isNow(schedule.datetime!, schedule.duration!)
+          : true
+
+        if (shouldAddToSchedule) {
+          filterSchedules.push(schedule)
+        }
+      })
+
+      setFilteredSchedulers(filterSchedules)
+    }
+  }, [channel, selectedScheduleDate])
 
   if (loading) {
     return (
@@ -97,9 +117,8 @@ const ChannelDetailpage: React.FC = () => {
           ))}
         </div>
         <div>
-          <ScheduleList 
-            needFilter
-            schedulers={channel.schedule[selectedScheduleDate]} 
+          <ScheduleList
+            schedulers={filteredSchedules} 
             itemExtraClass={style.scheduleItem} 
           />
         </div>

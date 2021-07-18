@@ -4,6 +4,7 @@ import PageBase from './../components/PageBase'
 import FilterForm from './../components/FilterForm'
 import CardList from './../components/CardList'
 import api from './../utils/api';
+import { isNow } from './../utils/datetime'
 
 const ChannelsPage: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true)
@@ -31,19 +32,39 @@ const ChannelsPage: React.FC = () => {
 
           response.forEach((item: ChannelType) => {
             const { currentSchedule } = item
-            const schedulers: SchedulerType[] = [] 
+            const schedulers: SchedulerType[] = []
 
-            for (let i = 0; i < 3; i++) {
+            let i = 0
+            let shouldAddToSchedule = false
+            do {
               const current = currentSchedule[i]
-              schedulers.push({
-                datetime: current?.datetime || null,
-                duration: current?.duration || null,
-                episodeId: current?.episodeId || null,
-                eventId: current?.eventId || null,
-                programmeId: current?.programmeId || null,
-                title: current?.title || null,
-              })
-            }
+              if (current) {
+                if (isNow(current.datetime!, current.duration!) && !shouldAddToSchedule) {
+                  shouldAddToSchedule = true
+                }
+
+                if (shouldAddToSchedule) {
+                  schedulers.push({
+                    datetime: current.datetime,
+                    duration: current.duration,
+                    episodeId: current.episodeId,
+                    eventId: current.eventId,
+                    programmeId: current.programmeId,
+                    title: current.title,
+                  })
+                }
+              } else {
+                schedulers.push({
+                  datetime: null,
+                  duration: null,
+                  episodeId: null,
+                  eventId: null,
+                  programmeId: null,
+                  title: null,
+                })
+              }
+              i++
+            } while (schedulers.length < 3)
 
             result.push({
               ...item,

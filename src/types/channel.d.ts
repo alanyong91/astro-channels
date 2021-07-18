@@ -92,6 +92,5 @@ interface ChannelHeaderProps {
 
 interface ScheduleListProps {
   schedulers: SchedulerType[];
-  needFilter?: boolean;
   itemExtraClass?: string;
 }
