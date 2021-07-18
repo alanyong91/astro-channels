@@ -3,8 +3,7 @@ import React, { useEffect, useState } from 'react';
 import PageBase from './../components/PageBase'
 import FilterForm from './../components/FilterForm'
 import CardList from './../components/CardList'
-import api from './../utils/api';
-import { isNow } from './../utils/datetime'
+import api from './../utils/api'
 
 const ChannelsPage: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true)
@@ -26,56 +25,15 @@ const ChannelsPage: React.FC = () => {
       try {
         const { status, data: { response } } = await api.get('/channel/all.json')
         if (status === 200) {
-          const result: ChannelType[] = []
           const categoryList: string[] = []
           const languagesList: string[] = []
 
           response.forEach((item: ChannelType) => {
-            const { currentSchedule } = item
-            const schedulers: SchedulerType[] = []
-
-            let i = 0
-            let shouldAddToSchedule = false
-            do {
-              const current = currentSchedule[i]
-              if (current) {
-                if (isNow(current.datetime!, current.duration!) && !shouldAddToSchedule) {
-                  shouldAddToSchedule = true
-                }
-
-                if (shouldAddToSchedule) {
-                  schedulers.push({
-                    datetime: current.datetime,
-                    duration: current.duration,
-                    episodeId: current.episodeId,
-                    eventId: current.eventId,
-                    programmeId: current.programmeId,
-                    title: current.title,
-                  })
-                }
-              } else {
-                schedulers.push({
-                  datetime: null,
-                  duration: null,
-                  episodeId: null,
-                  eventId: null,
-                  programmeId: null,
-                  title: null,
-                })
-              }
-              i++
-            } while (schedulers.length < 3)
-
-            result.push({
-              ...item,
-              schedulers
-            })
-
             categoryList.push(item.category)
             languagesList.push(item.language)
           })
 
-          setChannels(result)
+          setChannels(response)
           setCategories(Array.from(new Set(categoryList)))
           setLanguages(Array.from(new Set(languagesList)))
         }
@@ -160,22 +118,22 @@ const ChannelsPage: React.FC = () => {
 
   return (
     <PageBase title="Astro Channels" description="Astro Channels">
-    <div className="container">
-      <FilterForm 
-        categories={categories}
-        languages={languages}
-        filter={filter} 
-        setFilter={setFilter} 
-      />
-      {!loading ? (
-        <CardList 
-          channels={filteredChannel}
-          toggleChannelBookmark={toggleChannelBookmark}
+      <div className="container">
+        <FilterForm 
+          categories={categories}
+          languages={languages}
+          filter={filter} 
+          setFilter={setFilter} 
         />
-      ) : (
-        <p>Loading...</p>
-      )}
-    </div>
+        {!loading ? (
+          <CardList 
+            channels={filteredChannel}
+            toggleChannelBookmark={toggleChannelBookmark}
+          />
+        ) : (
+          <p>Loading...</p>
+        )}
+      </div>
     </PageBase>
   )
 }

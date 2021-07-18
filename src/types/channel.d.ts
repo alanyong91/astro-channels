@@ -23,7 +23,6 @@ interface ChannelType {
   backupImage: string;
   category: string;
   currentSchedule: CurrentScheduleType[];
-  schedulers: SchedulerType[];
   description: string;
   detailUrl: string;
   filter: string[];
