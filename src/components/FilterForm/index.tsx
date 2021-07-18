@@ -75,6 +75,7 @@ const FilterForm: React.FC<FilterFormProps> = ({ categories, languages, filter, 
             type='text' 
             value={keyword}
             autoCapitalize='none'
+            placeholder='Search by channel name and channel number'
             onChange={(event) => setKeyword(event.target.value)}
             onKeyPress={(event) => event.key === 'Enter' ? onSearchKeyword() : null}
           />
